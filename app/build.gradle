@@ -1,0 +1,102 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.0"
+    defaultConfig {
+        applicationId "com.example.lbhsot.larch"
+        minSdkVersion 15
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    configurations.all {
+        resolutionStrategy.force 'com.google.code.findbugs:jsr305:3.0.1'
+    }
+
+
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+
+}
+
+kapt {
+    generateStubs = true
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:26.+'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+
+    //Networking
+    compile 'com.google.code.gson:gson:2.7'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.3.0'
+    //Rx adapter for retrofit
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    //Rx
+    compile 'io.reactivex:rxjava:1.1.6'
+    compile 'io.reactivex:rxandroid:1.2.1'
+
+    //For Lifecycles, LiveData, and ViewModel, add:
+    compile 'android.arch.lifecycle:runtime:1.0.0-alpha5'
+    compile 'android.arch.lifecycle:extensions:1.0.0-alpha5'
+    annotationProcessor "android.arch.lifecycle:compiler:1.0.0-alpha5"
+    //For Room, add:
+    compile 'android.arch.persistence.room:runtime:1.0.0-alpha5'
+    annotationProcessor "android.arch.persistence.room:compiler:1.0.0-alpha5"
+    //For testing Room migrations, add:
+//    testCompile "android.arch.persistence.room:testing:1.0.0-alpha5"
+    //For Room RxJava support, add:
+//    compile 'android.arch.persistence.room:rxjava2:1.0.0-alpha5'
+    kapt "com.android.databinding:compiler:$plugin_version"
+
+    compile 'com.android.support:multidex:1.0.1'
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
+    compile 'com.jakewharton.timber:timber:4.5.1'
+
+//    apt 'com.google.guava:guava:20.0'
+    // dagger2 kotlin中需要使用kapt
+    compile 'com.google.dagger:dagger:2.0'
+    kapt 'com.google.dagger:dagger-compiler:2.0'
+    provided 'org.glassfish:javax.annotation:10.0-b28'
+//    compile ('com.google.dagger:dagger-android:2.11', 'com.google.guava:guava:20.0')
+//    compile 'com.google.dagger:dagger-android-support:2.11'
+//    compile 'com.google.dagger:dagger-android-processor:2.11'
+
+
+    compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile 'com.android.support:cardview-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+}
+repositories {
+    mavenCentral()
+}
