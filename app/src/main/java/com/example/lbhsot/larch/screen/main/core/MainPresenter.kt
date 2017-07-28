@@ -10,20 +10,17 @@ import rx.schedulers.Schedulers
 /**
  * Created by lbhsot on 2017/7/26.
  */
-class MainPresenter(val model: MainModel, val view: MainView) : BasePresenterImpl(), MainContract.Presenter{
+class MainPresenter(val model: MainModel, val viewModel: MainViewModel) : BasePresenterImpl(), MainContract.Presenter{
 
     override fun onStart() {
         dataSub.addTo(subscriptions)
     }
 
     val dataSub: Subscription
-        get() = model.isNetworkAvailable.doOnNext { networkAvailable ->
-            if (!networkAvailable) {
-                Log.d("no conn", "no connexion")
-            }
-        }.filter { true }.flatMap { model.getGitUserData() }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({ user ->
+        get() = model.getGitUserData().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({ user ->
             Log.d("ok loaded", "cccc")
-            view.setResult(user)
+            viewModel.text.value = "name: " + user.name + " avatar: " + user.avatar_url
+//            viewModel.str = "i am growt!"
         }
         ) { throwable -> }
 

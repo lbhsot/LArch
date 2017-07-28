@@ -26,11 +26,6 @@ class LArchApp : MultiDexApplication() {
         instance = this
         initTimber()
         appComponent.inject(this)
-//        initAppComponent()
-    }
-
-    private fun initAppComponent() {
-//        appComponent = DaggerAppComponent.builder().appContextModule(AppContextModule(this)).build();
     }
 
     /**

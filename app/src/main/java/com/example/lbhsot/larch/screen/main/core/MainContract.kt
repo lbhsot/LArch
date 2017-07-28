@@ -9,9 +9,8 @@ import rx.Observable
  * Created by lbhsot on 2017/7/26.
  */
 interface MainContract {
-    interface View : IBaseView {
-        fun setResult(user: GithubUser)
-        fun view() : android.view.View
+    interface View : IBaseView{
+        fun setText(str: String)
     }
 
     interface Presenter : IBasePresenter {
